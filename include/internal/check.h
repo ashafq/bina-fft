@@ -21,13 +21,11 @@
 
 static void unit_test_checker(const char *expr, int eval)
 {
-	char *pass_str;
-	char *fail_str;
+	char *pass_str = NULL;
+	char *fail_str = NULL;
 	char *long_dash = "---------------";
 
-#	ifdef HAS_FD /* I really should have something better here.
-			Unfortunately I don't. :'( */
-
+#	ifdef HAS_FD
 	/* Check if stdout (file descriptor 1) is a going into a terminal.
 	 * If so, then display pretty colors, else just use plain text.
 	 */
@@ -35,20 +33,23 @@ static void unit_test_checker(const char *expr, int eval)
 		pass_str = "[\e[1;32mPASS\e[0m]";
 		fail_str = "[\e[1;31mFAIL\e[0m]";
 	} else {
-#	endif
 		pass_str = "[PASS]";
 		fail_str = "[FAIL]";
-#	ifdef HAS_FD
 	}
-#	endif
+#	else
+	pass_str = "[PASS]";
+	fail_str = "[FAIL]";
+#	endif			/* ifdef HAS_FD */
 
-	if(!eval) fprintf(stdout, "%s", fail_str);
-	else fprintf(stdout, "%s", pass_str);
+	if (!eval) {
+		fprintf(stdout, "%s", fail_str);
+	} else {
+		fprintf(stdout, "%s", pass_str);
+	}
 
 	fprintf(stdout, " %s %s\n", long_dash, expr);
 
 	return;
 }
 
-#endif /* BINA_FFT_CHECK_H */
-
+#endif				/* BINA_FFT_CHECK_H */

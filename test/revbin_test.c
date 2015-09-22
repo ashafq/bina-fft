@@ -28,6 +28,8 @@ static void revbin_test(void)
 {
 	puts("revbin_test");
 
+
+	CHECK(revbin(0) == 0);
 	CHECK(revbin(0x00000001) == 0x80000000);
 	CHECK(revbin(0x00000002) == 0x40000000);
 	CHECK(revbin(0x00000004) == 0x20000000);
@@ -73,6 +75,8 @@ static void revbin64_test(void)
 	int n = sizeof(uint64_t) * CHAR_BIT;
 
 	puts("revbin64_test");
+
+	CHECK(revbin64(0) == 0);
 
 	for(i = 0; i <= n; i++)
 	{

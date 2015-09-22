@@ -23,8 +23,8 @@ int main()
 	memset(a, 0xffU, size * sizeof(char));
 	CHECK(is_aligned(a, ALIGNMENT));
 
+	/* Testing `b' */
 	assert(b != NULL);
-
 	for (k = 0; k < colums; k++) {
 		memset(b[k], 0xffu, size * sizeof(float));
 		CHECK(is_aligned(b[k], ALIGNMENT));

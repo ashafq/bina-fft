@@ -1,3 +1,11 @@
+/*******************************************************************************
+* bina-fft: A simple FFT implementation for education purpose
+* Copyright (C) 2012 - Ayan Shafqat, All rights reserved.
+* See LICENSE for more information.
+*
+* aligned_malloc.c - Aligned memory allocator
+*******************************************************************************/
+
 #include <stdint.h>
 #include <stdlib.h>
 
@@ -34,10 +42,10 @@ void *aligned_calloc(size_t alignment, size_t size)
 	*/
 	total_size = size + (2 * alignment) + sizeof(address_t);
 
-	/* Call malloc to allocate the data */
-	head = malloc(sizeof(byte_t) * total_size);
+	/* allocate the data */
+	head = calloc(total_size, sizeof(byte_t));
 
-	/* If malloc succeeds, then continue inside */
+	/* If calloc succeeds, then continue inside */
 	if (head != NULL) {
 		/* Store the original pointer */
 		origin = head;
