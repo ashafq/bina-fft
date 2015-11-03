@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "aligned_malloc.h"
+#include "internal/aligned_malloc.h"
 
 /* Some local typedefs */
 typedef unsigned char *pointer_t;

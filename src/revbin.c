@@ -5,7 +5,7 @@
 * revbin.c - Contains function implementation of bit-reversing a binary
 * sequence
 *******************************************************************************/
-#include "revbin.h"
+#include "internal/revbin.h"
 
 #ifdef __cplusplus
 #error This file needs to be compiled with a C compiler
@@ -31,6 +31,13 @@
  */
 uint32_t revbin(uint32_t x)
 {
+#	ifdef __arm__
+
+	asm("rbit %1, %0": "=r"(x):"r"(x));
+	return x;
+
+#	else /* portable version */
+
 	const uint32_t BIT    = UINT32_C(0x55555555);
 	const uint32_t PAIR   = UINT32_C(0x33333333);
 	const uint32_t NIBBLE = UINT32_C(0x0f0f0f0f);
@@ -43,6 +50,8 @@ uint32_t revbin(uint32_t x)
 	x = (x >> 16) | (x << 16);
 
 	return x;
+
+#	endif
 }
 
 
