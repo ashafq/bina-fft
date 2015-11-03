@@ -28,7 +28,6 @@ static void revbin_test(void)
 {
 	puts("revbin_test");
 
-
 	CHECK(revbin(0) == 0);
 	CHECK(revbin(0x00000001) == 0x80000000);
 	CHECK(revbin(0x00000002) == 0x40000000);

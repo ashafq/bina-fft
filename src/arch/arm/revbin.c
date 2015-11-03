@@ -3,13 +3,9 @@
 * Copyright (C) 2012 - Ayan Shafqat, All rights reserved.
 *
 * revbin.c - Contains function implementation of bit-reversing a binary
-* sequence
+* sequence specific to the ARM chip.
 *******************************************************************************/
 #include "internal/revbin.h"
-
-/* A helper macro to make code more readable. This really hurts my eyes. */
-#define SWAP_BITS(b, m, n) \
-	((((b) >> (n)) & (m)) | (((b) & (m)) << (n)))
 
 /* Reverses binary integer from least significant bit first to most significant
  * bit first. This algorithm is copied from Stanford Graphics's bit-hacking
@@ -27,17 +23,7 @@
  */
 uint32_t revbin(uint32_t x)
 {
-	const uint32_t BIT    = UINT32_C(0x55555555);
-	const uint32_t PAIR   = UINT32_C(0x33333333);
-	const uint32_t NIBBLE = UINT32_C(0x0f0f0f0f);
-	const uint32_t BYTE   = UINT32_C(0x00ff00ff);
-
-	x = SWAP_BITS(x, BIT,     1);
-	x = SWAP_BITS(x, PAIR,    2);
-	x = SWAP_BITS(x, NIBBLE,  4);
-	x = SWAP_BITS(x, BYTE,    8);
-	x = (x >> 16) | (x << 16);
-
+	asm("rbit %1, %0": "=r"(x):"r"(x));
 	return x;
 }
 
@@ -48,19 +34,16 @@ uint32_t revbin(uint32_t x)
  */
 uint64_t revbin64(uint64_t x)
 {
-	const uint64_t BIT     = UINT64_C(0x5555555555555555);
-	const uint64_t PAIR    = UINT64_C(0x3333333333333333);
-	const uint64_t NIBBLE  = UINT64_C(0x0f0f0f0f0f0f0f0f);
-	const uint64_t BYTE    = UINT64_C(0x00ff00ff00ff00ff);
-	const uint64_t SWORD   = UINT64_C(0x0000ffff0000ffff);
+	uint32_t lox = (uint32_t) (x);
+	uint32_t hix = (uint32_t) (x >> 32U);
 
-	x = SWAP_BITS(x, BIT,        1);
-	x = SWAP_BITS(x, PAIR,       2);
-	x = SWAP_BITS(x, NIBBLE,     4);
-	x = SWAP_BITS(x, BYTE,       8);
-	x = SWAP_BITS(x, SWORD,     16);
-	x = (x >> 32) | (x << 32);
+	/* Reverse bits for 32 bit segments */
+	lox = revbin(lox);
+	hix = revbin(hix);
 
-	return x;
+	/* Swap the 32 bit segments */
+	uint64_t out = ((uint64_t)lox << 32U) | ((uint64_t)hix);
+
+	return out;
 }
 
