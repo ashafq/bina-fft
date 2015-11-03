@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <assert.h>
 
-#include "aligned_malloc.h"
-#include "check.h"
+#include "internal/check.h"
+#include "internal/aligned_malloc.h"
 
 static int is_aligned(void *ptr, size_t alignment);
 #define ALIGNMENT (16)

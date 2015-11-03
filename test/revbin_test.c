@@ -10,8 +10,8 @@
 #include <stdint.h>
 #include <limits.h>
 
-#include "check.h"
-#include "revbin.h"
+#include "internal/check.h"
+#include "internal/revbin.h"
 
 static void revbin_test(void);
 static void revbin64_test(void);
