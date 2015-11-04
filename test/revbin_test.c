@@ -68,7 +68,7 @@ static void revbin_test(void)
 /* Testing revbin - 64 bit */
 static void revbin64_test(void)
 {
-	uint64_t in  = UINT64_C(0x0000000000000001);
+	uint64_t in = UINT64_C(0x0000000000000001);
 	uint64_t out = UINT64_C(0x8000000000000000);
 	int i = 0;
 	int n = sizeof(uint64_t) * CHAR_BIT;
@@ -77,10 +77,9 @@ static void revbin64_test(void)
 
 	CHECK(revbin64(0) == 0);
 
-	for(i = 0; i <= n; i++)
-	{
+	for (i = 0; i <= n; i++) {
 		CHECK(revbin64(in) == out);
-		in  <<= 1;
+		in <<= 1;
 		out >>= 1;
 	}
 
