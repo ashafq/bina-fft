@@ -12,46 +12,41 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	/*
-	 * Single precision types
-	 */
-	typedef float bina_realf_t;
 
-	/* Use C99 Complex if complex.h is included prior to this file */
-#	if defined(_Complex_I) && defined(complex) && defined(I)
-	typedef _Complex float bina_cmplxf_t;
-#	else			/* use bit-equavalent complex type */
-	typedef float bina_cmplxf_t[2];
-#	endif			/* _Complex_I */
+typedef void *bina_transform;
 
-	/*
-	 * Double precision types
-	 */
-	typedef double bina_real_t;
+/* Use C99 Complex if complex.h is included prior to this file */
+#if defined(_Complex_I) && defined(complex) && defined(I)
 
-	/* Use C99 Complex if complex.h is included prior to this file */
-#	if defined(_Complex_I) && defined(complex) && defined(I)
-	typedef _Complex double bina_cmplx_t;
-#	else			/* use bit-equavalent complex type */
-	typedef double bina_cmplx_t[2];
-#	endif			/* _Complex_I */
+/* Eff it, I am going to meta-program the sheet out of this */
 
-	/*
-	 * Long precision types
-	 */
-#	ifdef BINA_FFT_HAS_LONG_DOUBLE
-	typedef long double bina_reall_t;
+#	define BINA_DECL_TYPE(type, suffix) \
+	typedef type bina_real##suffix; \
+	typedef _Complex type bina_complex##suffix;
 
-	/* Use C99 Complex if complex.h is included prior to this file */
-#	if defined(_Complex_I) && defined(complex) && defined(I)
-	typedef _Complex long double bina_cmplxl_t;
-#	else			/* use bit-equavalent complex type */
-	typedef long double bina_cmplxl_t[2];
-#	endif			/* _Complex_I */
-#	endif			/* ifndef BINA_FFT_HAS_LONG_DOUBLE */
+#else /* Use bit-compatible complex type */
+
+#	define BINA_DECL_TYPE(type, suffix) \
+	typedef type bina_real##suffix; \
+	typedef type bina_complex##suffix[2];
+#endif
+
+/* Data types */
+
+BINA_DECL_TYPE(double, );
+
+int bina_transform_execute(bina_transform);
+int bina_transform_free(bina_transform);
+
+/* Transform types */
+bina_transform bina_transform_create_radix2_c2c_fft
+		(bina_complex *in, bina_complex *out,
+		int fft_length, int flags);
+
+#undef BINA_DECL_TYPE
 
 #ifdef __cplusplus
-};				/* extern "C" */
+}				/* extern "C" */
 #endif
 
 #endif				/* BINA_FFT_BINAFFT_H */
