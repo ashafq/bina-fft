@@ -5,7 +5,7 @@
 * revbin.c - Contains function implementation of bit-reversing a binary
 * sequence specific to the ARM chip.
 *******************************************************************************/
-#include "internal/revbin.h"
+#include "internal/bitmagic.h"
 
 /* Reverses binary integer from least significant bit first to most significant
  * bit first. This algorithm is copied from Stanford Graphics's bit-hacking
