@@ -5,9 +5,12 @@
 * revbin.c - Contains function implementation of bit-reversing a binary
 * sequence
 *******************************************************************************/
-#include "internal/revbin.h"
 
-/* A helper macro to make code more readable. This really hurts my eyes. */
+#include "internal/bitmagic.h"
+
+/* A helper macro to make bit swapping code more readable, or else
+ * this really hurts my eyes.
+ */
 #define SWAP_BITS(b, m, n) \
 	((((b) >> (n)) & (m)) | (((b) & (m)) << (n)))
 

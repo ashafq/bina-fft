@@ -5,13 +5,15 @@
 * revbin.h - Contains functions to bit-reverse a binary sequence.
 *******************************************************************************/
 
+#ifndef BINA_FFT_INTERNAL_BITMAGIC_H
+#define BINA_FFT_INTERNAL_BITMAGIC_H
+
 #include <stdint.h>
 
-#ifndef BINA_FFT_REVBIN_H
-#define BINA_FFT_REVBIN_H
-
-uint64_t revbin64(uint64_t);
 uint32_t revbin(uint32_t);
+uint64_t revbin64(uint64_t);
+int ispowtwo(int);
+int ilog2(uint32_t);
 
 #endif /* BINA_FFT_REVBIN_H */
 

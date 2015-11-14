@@ -11,7 +11,7 @@
 #include <limits.h>
 
 #include "internal/check.h"
-#include "internal/revbin.h"
+#include "internal/bitmagic.h"
 
 static void revbin_test(void);
 static void revbin64_test(void);

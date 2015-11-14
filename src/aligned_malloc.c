@@ -126,7 +126,6 @@ void *aligned_2d_calloc(size_t alignment, size_t rows, size_t columns,
 	size_t bytes_needed_row = 0;
 	size_t bytes_needed_col = 0;
 	size_t bytes_needed_tot = 0;
-	size_t c = 0;
 	pointer_t head = NULL;
 	pointer_t origin = NULL;
 	pointer_t col_ptr = NULL;
@@ -182,7 +181,7 @@ void *aligned_2d_calloc(size_t alignment, size_t rows, size_t columns,
 	col_ptr = head;
 	row_ptr = head + (columns * sizeof(pointer_t));
 
-	for (c = 0; c < columns; ++c) {
+	for (size_t c = 0; c < columns; ++c) {
 		row_ptr = get_aligned_pointer_up(row_ptr, alignment);
 		*((address_t *) col_ptr) = (address_t) row_ptr;
 		row_ptr += (rows * element_size);
